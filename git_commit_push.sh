@@ -5,9 +5,9 @@ git add .
 
 # Commit changes with the specified commit message
 git commit -m "
-feat(peercommunication): Define MessageType Enumeration
+feat(peercommunication): Implement Message Struct and Methods
 
-Create a MessageType enumeration to represent different types of messages in peer-to-peer communication. This enum includes constants for various message types used in P2P protocols, facilitating clear and consistent identification of message types.
+Introduce a Message struct representing P2P messages, along with methods to convert messages to bytes and obtain a human-readable string representation of the message type. This provides a foundation for handling communication between peers in a peer-to-peer network.
 
 "
 # Push changes to the remote repository
