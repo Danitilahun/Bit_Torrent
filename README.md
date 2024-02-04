@@ -57,20 +57,25 @@ This project entails the creation of a command-line torrent client utilizing Go.
 
 - The client exhibits resilience, recovering from errors and persisting bitfield information to ensure continuity in processes.
 
-## Project Strengths
+## Limitations
 
-- **Efficient Download/Upload**: Seamlessly handles large file transfers with optimal concurrency.
-- **Parser Accuracy**: Extracts vital information accurately for precise functionality.
+The torrent client has the following limitations:
 
-- **Robust Tracker Communication**: Ensures reliable communication with the tracker, keeping peer information up-to-date.
+1. **File Type Support:**
 
-- **Piece-Level Management**: Systematic handling of file pieces for a smooth download and upload process.
+   - Only supports `.torrent` files.
+   - Does not support magnet links.
 
-- **Concurrency for Scalability**: Leverages Go's concurrency features for efficient handling of concurrent downloads and uploads.
+2. **Tracker Protocol:**
 
-- **Error Resilience**: Gracefully handles unexpected scenarios, ensuring a stable client.
+   - Only supports HTTP trackers.
+   - Does not support other tracker protocols.
 
-- **Fault Tolerance and Recovery**: Recovers from errors and persists critical information, ensuring uninterrupted processes.
+3. **Torrent Structure:**
+   - Does not support multi-file torrents.
+   - Currently designed for single-file torrents.
+
+These limitations outline the current scope of the torrent client and represent areas where future improvements or additional features could be considered.
 
 In summary, the project delivers a functional and efficient torrent client, demonstrating prowess in efficient file transfers, accurate parsing, robust communication, and resilience in the face of errors.
 
