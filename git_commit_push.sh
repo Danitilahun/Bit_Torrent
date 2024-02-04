@@ -5,9 +5,9 @@ git add .
 
 # Commit changes with the specified commit message
 git commit -m "
-feat(seed): Add HandleSeedingRequest function
+feat(peerinteraction): Add processIncomingMessages function
 
-Introduce HandleSeedingRequest function in the seed package to handle seeding requests from peers. The function validates the request, checks for choke status, and processes the requested piece data. Update import paths to use the correct package names for common and models.
+Introduce processIncomingMessages function in the peerinteraction package to handle incoming messages from peers. The function reads and processes various message types, updating peer state and handling piece job results. It also communicates with the seed package for handling seed requests. Update import paths to use the correct package names for download, messageutils, peer, peercommunication, piecehandler, and seed.
 "
 # Push changes to the remote repository
 git push origin HEAD
