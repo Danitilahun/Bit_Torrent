@@ -1,4 +1,4 @@
-package common
+package messageutils
 
 import (
 	"encoding/binary"
