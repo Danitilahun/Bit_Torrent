@@ -1,7 +1,7 @@
 package download
 
 // DownloadJobProgress represents the progress of downloading a piece.
-type DownloadJobProgress struct {
+type PieceJobProgress struct {
 	// PieceIndex is the index of the piece being downloaded.
 	PieceIndex int
 	// Buffer is the portion of the piece data received so far.
