@@ -5,9 +5,9 @@ git add .
 
 # Commit changes with the specified commit message
 git commit -m "
-feat(download): Add DownloadJobResult struct
+feat(download): Add DownloadJobProgress struct
 
-Introduce the DownloadJobResult struct representing the result of a successfully downloaded piece.
+Introduce the DownloadJobProgress struct representing the progress of downloading a piece.
 
 "
 # Push changes to the remote repository
