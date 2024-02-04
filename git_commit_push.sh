@@ -5,9 +5,7 @@ git add .
 
 # Commit changes with the specified commit message
 git commit -m "
-feat(peerinteraction): Implement StartPeerWorker function
-
-Add StartPeerWorker function to manage the interaction with a peer. It establishes the connection, handshake, and handles piece jobs. The function sends interested and unchoke messages, receives the bitfield, and interacts with the peer based on the piece job progress. It also uses the processIncomingMessages function for handling incoming messages and communicates with other channels like workChannel, pieceJobResultChannel, and seedRequestChannel.
+Implement the main BitTorrent client logic with concurrency, downloading, seeding, tracker communication, and optimistic unchoking. Handles work distribution, peer connections, piece handling, and updates the bitfield and progress accordingly. Utilizes channels for communication between goroutines and manages seeding requests. Implements a listener for seeding server, optimistic unchoking, and processes results as pieces are downloaded, updating the total downloaded count and sending 'have' messages to peers. Implements graceful shutdown and write completed blob to files upon finishing the download.
 "
 # Push changes to the remote repository
 git push origin HEAD
