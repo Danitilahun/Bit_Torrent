@@ -1,4 +1,4 @@
-# Torrent Client Using Golang
+# Bit-Torrent Client Using Golang
 
 ## Setup
 
