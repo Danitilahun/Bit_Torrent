@@ -5,9 +5,9 @@ git add .
 
 # Commit changes with the specified commit message
 git commit -m "
-chore(peers): Organize code, move PeerAddress to separate file
+refactor(peers): Refactor package structure and naming
 
-Move the definition of the PeerAddress type to its own file (peer_address.go) to improve code organization and maintainability. No functional changes.
+Update the package name to "peers" to reflect the entities represented in the code. Organize the code into separate files for Peer and PeerAddress to enhance clarity and maintainability.
 
 "
 # Push changes to the remote repository
