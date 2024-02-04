@@ -5,9 +5,9 @@ git add .
 
 # Commit changes with the specified commit message
 git commit -m "
-feat(tracker): Add GetPeersList function and related utilities
+feat(peerutils): Add ConnectToPeer and EstablishConnection functions
 
-Introduce GetPeersList function in the tracker package to retrieve a list of peers from specified trackers in the torrent manifest. This includes functions to generate the tracker request URL, send an HTTP request to the tracker, and extract peer information from the tracker response. Additionally, update imports to use the correct package names.
+Introduce ConnectToPeer function to establish a TCP connection to a peer and EstablishConnection function to connect to a peer and return a Peer instance. Additionally, update the import paths to use the correct package names.
 "
 # Push changes to the remote repository
 git push origin HEAD
