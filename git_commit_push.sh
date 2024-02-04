@@ -5,10 +5,9 @@ git add .
 
 # Commit changes with the specified commit message
 git commit -m "
-docs(piecehandler): Add package for handling and processing pieces in BitTorrent protocol
+feat(tracker): Add GetPeersList function and related utilities
 
-Introduce a new package named 'piecehandler' containing utility functions for managing and processing pieces within the BitTorrent protocol. Each function is documented to explain its purpose and usage.
-
+Introduce GetPeersList function in the tracker package to retrieve a list of peers from specified trackers in the torrent manifest. This includes functions to generate the tracker request URL, send an HTTP request to the tracker, and extract peer information from the tracker response. Additionally, update imports to use the correct package names.
 "
 # Push changes to the remote repository
 git push origin HEAD
