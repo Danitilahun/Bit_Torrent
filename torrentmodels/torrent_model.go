@@ -1,7 +1,7 @@
 package torrentmodels
 
-// TorrentManifest represents the metadata information of a torrent.
-type TorrentManifest struct {
+// TorrentFile represents the metadata information of a torrent file.
+type TorrentFile struct {
 	PieceHashes   [][20]byte     // An array of SHA-1 hashes for each piece of the torrent file.
 	Announce      string         // The URL of the tracker server.
 	AnnounceList  []string       // A list of backup tracker URLs.
