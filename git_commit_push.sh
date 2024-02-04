@@ -5,9 +5,9 @@ git add .
 
 # Commit changes with the specified commit message
 git commit -m "
-refactor(peers): Refactor package structure and naming
+feat(download): Add DownloadJob struct
 
-Update the package name to "peers" to reflect the entities represented in the code. Organize the code into separate files for Peer and PeerAddress to enhance clarity and maintainability.
+Introduce the DownloadJob struct representing a job to download a piece of a file in a torrent.
 
 "
 # Push changes to the remote repository
