@@ -5,9 +5,11 @@ git add .
 
 # Commit changes with the specified commit message
 git commit -m "
-feat(peerinteraction): Add processIncomingMessages function
+feat(peerinteraction): Add readHandShake and sendChoke functions
 
-Introduce processIncomingMessages function in the peerinteraction package to handle incoming messages from peers. The function reads and processes various message types, updating peer state and handling piece job results. It also communicates with the seed package for handling seed requests. Update import paths to use the correct package names for download, messageutils, peer, peercommunication, piecehandler, and seed.
+Introduce readHandShake function to handle reading the handshake from a peer and verifying its correctness. The function checks the handshake's info hash against the manifest and prints status messages accordingly.
+
+Add sendChoke function to send a choke message to a peer. The function utilizes SendMessageWithRetry from messageutils package and prints status messages based on the outcome.
 "
 # Push changes to the remote repository
 git push origin HEAD
