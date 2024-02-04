@@ -5,10 +5,9 @@ git add .
 
 # Commit changes with the specified commit message
 git commit -m "
-feat(fileUtils): Add utility functions for file and blob handling
+feat(seed): Add SeedRequest struct
 
-Introduce utility functions in the fileUtils package for managing files and blobs in a BitTorrent client. Includes functions to load or create download blobs, write blob data to files based on manifest information, and read a torrent manifest from a file. Update import paths to use the correct package names.
-
+Introduce the SeedRequest struct in the seed package, representing a request from a peer in a seed scenario. This struct includes a reference to the peer making the request and the corresponding peer communication message.
 "
 # Push changes to the remote repository
 git push origin HEAD
