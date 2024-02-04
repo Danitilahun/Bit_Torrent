@@ -5,9 +5,9 @@ git add .
 
 # Commit changes with the specified commit message
 git commit -m "
-feat(torrentmodels): add DecodeTorrentManifest function
+docs(handshake): Explain HandShake struct and methods
 
-Introduces a new function DecodeTorrentManifest in the torrentmodels package. This function is responsible for decoding the metadata of a torrent, extracting information such as announce URL, announce list, comments, created by, and detailed file information. The decoded data is used to create a TorrentManifest struct, providing a comprehensive representation of the torrent's metadata.
+Provide documentation for the HandShake struct in the handshake package, detailing the purpose of each field (HeaderText, InfoHash, PeerId) and explaining the New constructor and ToBytes method. Clarify the structure of a BitTorrent protocol handshake message in the comments.
 
 "
 # Push changes to the remote repository

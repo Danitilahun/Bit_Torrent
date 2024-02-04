@@ -42,7 +42,22 @@ func DecodeTorrentManifest(data interface{}) TorrentManifest {
 	torrentName := string(info["name"].([]byte))
 
 	// Calculate the SHA-1 hash of the 'info' section to get the InfoHash.
+	// Marshaling (Serialization): Marshaling is the process of converting in-memory
+	// data structures or objects into a format (such as JSON, XML, or binary) that
+	// can be easily stored or transmitted. It is commonly used when you want to save or send data.
+
+	// Bencode is a simple binary encoding format used primarily in the context of BitTorrent, a
+	// peer-to-peer file-sharing protocol. It is designed to represent dictionaries (hash tables),
+	// lists, integers, and byte strings in a compact binary format. Bencode is used to encode the
+	// metadata of torrent files, describing the structure and content of the files being shared in a BitTorrent network.
+
 	infoBytes, _ := bencode.Marshal(info)
+
+	// The SHA-1 hash is commonly used in various cryptographic and data integrity verification scenarios.
+	// A checksum is a value derived from the data in a way that is relatively easy to calculate and that
+	// ideally changes significantly when the data changes. Checksums are commonly used in various fields
+	//  for error checking, data integrity verification, and detecting changes in data.
+
 	infoHash := sha1.Sum(infoBytes)
 
 	// Extract the raw byte string representing the concatenated SHA-1 hashes of all pieces.
