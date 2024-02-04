@@ -5,9 +5,11 @@ git add .
 
 # Commit changes with the specified commit message
 git commit -m "
-docs(handshake): Explain HandShake struct and methods
+Separate handshake package into struct and I/O files
 
-Provide documentation for the HandShake struct in the handshake package, detailing the purpose of each field (HeaderText, InfoHash, PeerId) and explaining the New constructor and ToBytes method. Clarify the structure of a BitTorrent protocol handshake message in the comments.
+- Move the HandShake struct and its methods to handshake.go
+- Move I/O related functions (ToBytes, ReadHandShake) to handshake_io.go
+- Organize code for better maintainability
 
 "
 # Push changes to the remote repository
