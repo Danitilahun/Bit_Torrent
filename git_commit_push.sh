@@ -5,7 +5,7 @@ git add .
 
 # Commit changes with the specified commit message
 git commit -m "
-feat: Add ReadRequestMessage function to parse byte slice into TorrentRequestMessage
+refactor: Rename ReadRequestMessage to ParseRequestMessage for clarity and add comments
 
 "
 # Push changes to the remote repository
