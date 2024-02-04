@@ -5,9 +5,9 @@ git add .
 
 # Commit changes with the specified commit message
 git commit -m "
-feat(peercommunication): Implement Message Struct and Methods
+chore(peers): Organize code, move PeerAddress to separate file
 
-Introduce a Message struct representing P2P messages, along with methods to convert messages to bytes and obtain a human-readable string representation of the message type. This provides a foundation for handling communication between peers in a peer-to-peer network.
+Move the definition of the PeerAddress type to its own file (peer_address.go) to improve code organization and maintainability. No functional changes.
 
 "
 # Push changes to the remote repository
