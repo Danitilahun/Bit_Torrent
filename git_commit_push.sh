@@ -5,9 +5,9 @@ git add .
 
 # Commit changes with the specified commit message
 git commit -m "
-feat(peerutils): Add ConnectToPeer and EstablishConnection functions
+feat(common): Update message utility functions and imports
 
-Introduce ConnectToPeer function to establish a TCP connection to a peer and EstablishConnection function to connect to a peer and return a Peer instance. Additionally, update the import paths to use the correct package names.
+Extend message utility functions in the common package to support custom message types defined in the peercommunication package. Update import paths to use the correct package names for peer and peercommunication. The functions include reading and sending various message types such as Have, Unchoke, Choke, and custom messages. Additionally, there are functions for reading request messages.
 "
 # Push changes to the remote repository
 git push origin HEAD
