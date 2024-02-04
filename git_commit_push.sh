@@ -5,9 +5,9 @@ git add .
 
 # Commit changes with the specified commit message
 git commit -m "
-feat(common): Update message utility functions and imports
+feat(common): Add handshake utility functions
 
-Extend message utility functions in the common package to support custom message types defined in the peercommunication package. Update import paths to use the correct package names for peer and peercommunication. The functions include reading and sending various message types such as Have, Unchoke, Choke, and custom messages. Additionally, there are functions for reading request messages.
+Introduce utility functions in the common package for handling BitTorrent protocol handshakes. Includes ReadHandShake function to read a handshake from a reader and EstablishHandShake function to establish a handshake with a peer. Update import paths to use the correct package names for handshake, peer, and torrentmodels.
 "
 # Push changes to the remote repository
 git push origin HEAD
