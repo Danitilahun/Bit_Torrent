@@ -11,7 +11,7 @@ import (
 )
 
 func HandleSeedingRequest(req *SeedRequest, blobFile []byte, currentBitField *bitfield.Bitfield, manifest *torrentmodels.TorrentManifest) {
-	if req.Peer.IsChoked {
+	if req.Peer.IsChoking {
 		messageutils.SendMessageWithRetry(req.Peer, peercommunication.Message{Type: peercommunication.MsgTypeChoke})
 		return
 	}

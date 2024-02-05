@@ -33,7 +33,7 @@ func (bitfield *Bitfield) WriteToFile(manifest *torrentmodels.TorrentManifest, b
 
 // LoadOrCreateBitFieldFromFile loads or creates a Bitfield from/to a file associated with the provided manifest.
 func LoadOrCreateBitFieldFromFile(manifest *torrentmodels.TorrentManifest) (*Bitfield, *os.File) {
-	bitfield := make(Bitfield, int(math.Ceil(float64(manifest.PieceLength)/8.0)))
+	bitfield := make(Bitfield, int(math.Ceil(float64(manifest.TotalLength/manifest.PieceLength)/8.0)))
 	bitfieldFilePath := manifest.TorrentName + ".bitfield"
 
 	if _, err := os.Stat(bitfieldFilePath); os.IsNotExist(err) {

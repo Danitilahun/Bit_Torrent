@@ -13,6 +13,10 @@ import (
 	"time"
 )
 
+// Trackers are servers that help coordinate the distribution of files amongst peers in the BitTorrent network.
+// The URL includes various query parameters that provide the tracker with information about the peer making the
+//  request and the torrent they are participating in.
+
 func GetPeersList(manifest torrentmodels.TorrentManifest, peerId [20]byte, port int) (peers []peer.PeerAddress, err error) {
 	fmt.Printf("Getting peers list from trackers\n")
 	announcer := []string{manifest.Announce}

@@ -12,6 +12,7 @@ import (
 	"github.com/Danitilahun/Bit_Torrent/peerinteraction"
 	"github.com/Danitilahun/Bit_Torrent/piecehandler"
 	"github.com/Danitilahun/Bit_Torrent/seed"
+	"github.com/Danitilahun/Bit_Torrent/torrentmodels"
 	"github.com/Danitilahun/Bit_Torrent/tracker"
 	"log"
 	mrand "math/rand"
@@ -29,16 +30,8 @@ func main() {
 
 	// Load progress from persistent storage
 	currentBitField, bitfieldFile := bitfield.LoadOrCreateBitFieldFromFile(&manifest)
-	totalDownloaded := 0
 
-	// count already downloaded pieces
-	for _, piece := range *currentBitField {
-		for i := 0; i < 8; i++ {
-			if piece&(1<<uint(i)) != 0 {
-				totalDownloaded++
-			}
-		}
-	}
+	totalDownloaded := countDownloadedPieces(currentBitField)
 
 	fmt.Println("Total downloaded", totalDownloaded)
 
@@ -58,17 +51,8 @@ func main() {
 	pieceJobResultChannel := make(chan *download.PieceJobResult)
 	seedRequestChannel := make(chan *seed.SeedRequest)
 
-	// create work for each piece
-	for index, hash := range manifest.PieceHashes {
-		// ignore already downloaded pieces
-		if !currentBitField.HasPiece(index) {
-			workChannel <- download.PieceJob{
-				PieceIndex:  index,
-				PieceHash:   hash,
-				PieceLength: piecehandler.GetPieceLength(index, int(manifest.PieceLength), int(manifest.TotalLength)),
-			}
-		}
-	}
+	// Call the function to create work for each piece
+	createWorkForPieces(&manifest, currentBitField, &workChannel)
 
 	// create common structure for leecher and seeder
 	peers := make([]*peer.Peer, len(peerAddresses))
@@ -86,50 +70,11 @@ func main() {
 		}
 	}()
 
-	// Start seeding server
-	go func() {
-		ListenAddr := ":" + fmt.Sprint(common.Port)
-		listener, err := net.Listen("tcp", ListenAddr)
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		defer listener.Close()
-
-		log.Printf("Listening on %s...\n", ListenAddr)
-
-		for {
-			conn, err := listener.Accept()
-			if err != nil {
-				log.Println(err)
-				continue
-			}
-			peers := append(peers, nil)
-			addr := peer.PeerAddress{
-				IP:   conn.RemoteAddr().(*net.TCPAddr).IP,
-				Port: uint16(common.Port),
-			}
-
-			go peerinteraction.StartPeerWorker(peers, len(peers)-1, addr, id, manifest, common.Port, &workChannel, currentBitField, &pieceJobResultChannel, &seedRequestChannel, &conn)
-		}
-	}()
+	// Start the seeding server in a separate goroutine
+	go startSeedingServer(&peers, id, manifest, common.Port, &workChannel, currentBitField, &pieceJobResultChannel, &seedRequestChannel)
 
 	// Optimistic Unchoking
-	go func() {
-		for {
-			if len(peers) != 0 {
-				// unchoke random peer
-				peerIndex := mrand.Intn(len(peers))
-				if peers[peerIndex] != nil {
-					if peers[peerIndex].IsChoked {
-						peers[peerIndex].IsChoked = false
-						go messageutils.SendUnchokeMessage(peers[peerIndex])
-					}
-				}
-			}
-			time.Sleep(31 * time.Second)
-		}
-	}()
+	go optimisticUnchoking(peers)
 
 	// process results
 	for {
@@ -163,4 +108,73 @@ func main() {
 			fileUtils.WriteBlobToFiles(&manifest)
 		}
 	}
+}
+
+func optimisticUnchoking(peers []*peer.Peer) {
+	for {
+		if len(peers) != 0 {
+			// unchoke random peer
+			peerIndex := mrand.Intn(len(peers))
+			if peers[peerIndex] != nil {
+				if peers[peerIndex].IsChoked {
+					peers[peerIndex].IsChoked = false
+					go messageutils.SendUnchokeMessage(peers[peerIndex])
+				}
+			}
+		}
+		time.Sleep(31 * time.Second)
+	}
+}
+
+func startSeedingServer(peers *[]*peer.Peer, id [20]byte, manifest torrentmodels.TorrentManifest, port int, workChannel *chan download.PieceJob, currentBitField *bitfield.Bitfield, pieceJobResultChannel *chan *download.PieceJobResult, seedRequestChannel *chan *seed.SeedRequest) {
+	ListenAddr := ":" + fmt.Sprint(port)
+	listener, err := net.Listen("tcp", ListenAddr)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer listener.Close()
+	log.Printf("Listening on %s...\n", ListenAddr)
+
+	for {
+		conn, err := listener.Accept()
+		if err != nil {
+			log.Println(err)
+			continue
+		}
+		*peers = append(*peers, nil) // This line needs attention. Consider initializing a new peer instead of appending nil.
+		addr := peer.PeerAddress{
+			IP:   conn.RemoteAddr().(*net.TCPAddr).IP,
+			Port: uint16(port),
+		}
+
+		go peerinteraction.StartPeerWorker(*peers, len(*peers)-1, addr, id, manifest, port, workChannel, currentBitField, pieceJobResultChannel, seedRequestChannel, &conn)
+	}
+}
+
+// createWorkForPieces generates download jobs for each piece in the manifest that hasn't been downloaded yet.
+func createWorkForPieces(manifest *torrentmodels.TorrentManifest, currentBitField *bitfield.Bitfield, workChannel *chan download.PieceJob) {
+	for index, hash := range manifest.PieceHashes {
+		// Ignore already downloaded pieces
+		if !currentBitField.HasPiece(index) {
+			*workChannel <- download.PieceJob{
+				PieceIndex:  index,
+				PieceHash:   hash,
+				PieceLength: piecehandler.GetPieceLength(index, int(manifest.PieceLength), int(manifest.TotalLength)),
+			}
+		}
+	}
+}
+
+func countDownloadedPieces(bitField *bitfield.Bitfield) int {
+	totalDownloaded := 0
+
+	for _, piece := range *bitField {
+		for i := 0; i < 8; i++ {
+			if piece&(1<<uint(i)) != 0 {
+				totalDownloaded++
+			}
+		}
+	}
+
+	return totalDownloaded
 }

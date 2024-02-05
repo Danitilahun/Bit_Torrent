@@ -27,12 +27,6 @@ func LoadOrCreateDownloadBlob(manifest *torrentmodels.TorrentManifest) *os.File 
 		panic(err)
 	}
 
-	// err = blobFile.Truncate(manifest.Length)
-	if err != nil {
-		fmt.Println("Can't truncate file", manifest.TorrentName, err)
-		panic(err)
-	}
-
 	return blobFile
 }
 

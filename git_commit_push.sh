@@ -5,7 +5,17 @@ git add .
 
 # Commit changes with the specified commit message
 git commit -m "
-Implement the main BitTorrent client logic with concurrency, downloading, seeding, tracker communication, and optimistic unchoking. Handles work distribution, peer connections, piece handling, and updates the bitfield and progress accordingly. Utilizes channels for communication between goroutines and manages seeding requests. Implements a listener for seeding server, optimistic unchoking, and processes results as pieces are downloaded, updating the total downloaded count and sending 'have' messages to peers. Implements graceful shutdown and write completed blob to files upon finishing the download.
+refactor: Organize code into separate files
+
+This commit refactors the main application code by organizing it into separate files for better code structure and maintainability. The main functionality remains unchanged, but the code is now divided into logical components.
+
+- The main application logic is kept in `main.go`.
+- The optimistic unchoking logic is moved to `optimistic_unchoking.go`.
+- The seeding server logic is moved to `seeding_server.go`.
+- Piece-related functions (creating work for pieces and counting downloaded pieces) are moved to `piece_work.go`.
+
+These changes aim to improve code readability, separation of concerns, and ease of future modifications.
+
 "
 # Push changes to the remote repository
 git push origin HEAD
