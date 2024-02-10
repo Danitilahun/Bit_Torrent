@@ -5,8 +5,8 @@ git add .
 
 # Commit changes with the specified commit message
 git commit -m "
-refactor: add comments
-"
+refactor: add readme"
+
 # Push changes to the remote repository
 git push origin HEAD
 
