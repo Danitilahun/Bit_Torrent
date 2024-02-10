@@ -2,13 +2,14 @@ package peerutils
 
 import (
 	"fmt"
-	"github.com/Danitilahun/Bit_Torrent/common"
-	"github.com/Danitilahun/Bit_Torrent/peer"
-	"github.com/Danitilahun/Bit_Torrent/torrentmodels"
 	"net"
 	"net/url"
 	"strconv"
 	"time"
+
+	"github.com/Danitilahun/Bit_Torrent/common"
+	"github.com/Danitilahun/Bit_Torrent/peer"
+	"github.com/Danitilahun/Bit_Torrent/torrentmodels"
 )
 
 func getTrackerRequestUrl(manifest torrentmodels.TorrentManifest, announce string, peerId [20]byte, port int) (string, error) {
