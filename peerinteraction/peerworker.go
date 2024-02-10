@@ -148,6 +148,7 @@ func StartPeerWorker(peers []*peer.Peer, i int, peerAddress peer.PeerAddress, pe
 				for msgType != peercommunication.MsgTypePiece {
 					msgType, err = processIncomingMessages(p, connReader, &pieceJobProgress, seedRequestChannel)
 					if p.IsChoking {
+						*workChannel <- pieceJob
 						break
 					}
 

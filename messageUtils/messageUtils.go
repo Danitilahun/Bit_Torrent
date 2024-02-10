@@ -54,6 +54,8 @@ func SendUnchokeMessage(peer *peer.Peer) (err error) {
 }
 
 func SendChokeMessage(peer *peer.Peer) (err error) {
+	// Unchoking, on the other hand, refers to the process of allowing a peer to
+	// download data from another peer without restrictions, enabling it to download at its maximum capacity.
 	_, err = SendMessageWithRetry(peer, peercommunication.Message{
 		Type:    peercommunication.MsgTypeChoke,
 		Payload: []byte{},
@@ -67,7 +69,7 @@ func SendMessageWithRetry(peer *peer.Peer, message peercommunication.Message) (i
 
 	for retries < 10 {
 		_, err := peer.Conn.Write(message.ToBytes())
-		if (err == nil || err == io.EOF) && retries == 0 {
+		if err == nil || err == io.EOF {
 			return retries, err
 		}
 

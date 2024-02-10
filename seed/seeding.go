@@ -12,7 +12,7 @@ import (
 
 func HandleSeedingRequest(req *SeedRequest, blobFile []byte, currentBitField *bitfield.Bitfield, manifest *torrentmodels.TorrentManifest) {
 	if req.Peer.IsChoking {
-		messageutils.SendMessageWithRetry(req.Peer, peercommunication.Message{Type: peercommunication.MsgTypeChoke})
+		messageutils.SendMessageWithRetry(req.Peer, peercommunication.Message{Type: peercommunication.MsgTypeUnChoke})
 		return
 	}
 
@@ -29,7 +29,7 @@ func HandleSeedingRequest(req *SeedRequest, blobFile []byte, currentBitField *bi
 	}
 
 	if !(*currentBitField).HasPiece(index) {
-		fmt.Printf("Received request message from peer %v:%v with invalid index %v\n", req.Peer.Address.IP, req.Peer.Address.Port, index)
+		fmt.Printf("Received request message from peer %v:%v for a piece that is not available at index %v\n", req.Peer.Address.IP, req.Peer.Address.Port, index)
 		return
 	}
 

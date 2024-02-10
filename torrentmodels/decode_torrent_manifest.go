@@ -5,8 +5,10 @@ package torrentmodels
 
 import (
 	"crypto/sha1"
-	"github.com/IncSW/go-bencode"
+	"fmt"
 	"path"
+
+	"github.com/IncSW/go-bencode"
 )
 
 // DecodeTorrentManifest decodes the given data into a TorrentManifest struct.
@@ -78,9 +80,9 @@ func DecodeTorrentManifest(data interface{}) TorrentManifest {
 	files := []interface{}{info}
 
 	if info["files"] != nil {
+		fmt.Println("Files exist")
 		files = info["files"].([]interface{})
 	}
-
 	// Loop through files, extract metadata, and build FileMetadata objects.
 	for _, file := range files {
 		file := file.(map[string]interface{})

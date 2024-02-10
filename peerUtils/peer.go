@@ -53,6 +53,9 @@ func EstablishConnection(peerAddress peer.PeerAddress, manifest torrentmodels.To
 
 	fmt.Printf("Connected to peer %v:%v\n", peerAddress.IP, peerAddress.Port)
 
+	// When a peer is "choking" another peer, it means that it is deliberately limiting the rate at which it sends data to that peer.
+	// When a peer is "choked" by another peer, it means that it is currently being limited in the rate at which it can receive data from that peer.
+
 	peerInstance = &peer.Peer{
 		Conn:       conn,
 		Address:    peerAddress,

@@ -148,13 +148,21 @@ func startSeedingServer(peers *[]*peer.Peer, id [20]byte, manifest torrentmodels
 			log.Println(err)
 			continue
 		}
-		*peers = append(*peers, nil) // This line needs attention. Consider initializing a new peer instead of appending nil.
-		addr := peer.PeerAddress{
-			IP:   conn.RemoteAddr().(*net.TCPAddr).IP,
-			Port: uint16(port),
+		peerInstance := peer.Peer{
+			Address: peer.PeerAddress{
+				IP:   conn.RemoteAddr().(*net.TCPAddr).IP,
+				Port: uint16(port),
+			},
+			Conn:       conn,
+			Interested: false,
+			IsChoked:   true,
+			IsChoking:  false,
+			BitField:   make([]byte, len(manifest.PieceHashes)),
 		}
 
-		go peerinteraction.StartPeerWorker(*peers, len(*peers)-1, addr, id, manifest, port, workChannel, currentBitField, pieceJobResultChannel, seedRequestChannel, &conn)
+		*peers = append(*peers, &peerInstance)
+
+		go peerinteraction.StartPeerWorker(*peers, len(*peers)-1, peerInstance.Address, id, manifest, port, workChannel, currentBitField, pieceJobResultChannel, seedRequestChannel, &conn)
 	}
 }
 

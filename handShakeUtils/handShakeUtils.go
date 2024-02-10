@@ -67,7 +67,7 @@ func EstablishHandShake(peerId [20]byte, peer peer.Peer, manifest torrentmodels.
 		}
 
 		_, err := peer.Conn.Write(handShake.ToBytes())
-		if (err == nil || err == io.EOF) && retries == 0 {
+		if err == nil || err == io.EOF {
 			return retries, err
 		}
 
